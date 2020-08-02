@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
         // Show Timer Countdown
         textTimer = findViewById(R.id.home_text_message)
         textTimer?.text = displayTime(yogTime)
+        textTimer?.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+
     }
 
     /**
@@ -64,17 +66,14 @@ class MainActivity : AppCompatActivity() {
         var soundOne = true
 
         if (timer != null) {
-            timer?.cancel()
-            timer = null
-            (view as Button).text = getString(R.string.home_button_start)
-            textTimer?.text = displayTime(yogTime)
+            resetYog(view)
             return
         }
 
 
         timer = object : CountDownTimer(timerDuration, timerInterval) {
             override fun onFinish() {
-                (view as Button).text = getString(R.string.home_button_start)
+                resetYog(view)
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -102,13 +101,24 @@ class MainActivity : AppCompatActivity() {
                         playSound("OpenYourEyes.wav")
                     }
 
-                } else {
-                    textTimer?.setTextColor(Color.BLACK)
                 }
+//                else {
+//                    textTimer?.setTextColor(Color.BLACK)
+//                }
             }
         }
         timer?.start()
         (view as Button).text = getString(R.string.home_button_reset)
+    }
+
+    /**
+     * Reset The Yog Timer
+     */
+    private fun resetYog(view: View) {
+        timer?.cancel()
+        timer = null
+        (view as Button).text = getString(R.string.home_button_start)
+        textTimer?.text = displayTime(yogTime)
     }
 
     /**
