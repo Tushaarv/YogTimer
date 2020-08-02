@@ -1,10 +1,10 @@
 package com.tushar.yogtime
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     // Minutes into Seconds
     private val yogTime: Long = 10 * 60
+    private val delay = 0
+
 
     //
     var mediaPlayer: MediaPlayer? = null
@@ -70,10 +72,15 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-
         timer = object : CountDownTimer(timerDuration, timerInterval) {
             override fun onFinish() {
-                resetYog(view)
+                val handler = Handler()
+                handler.postDelayed(
+                    {
+                        resetYog(view)
+                    }, delay.toLong()
+                )
+                playSound("OpenYourEyes.wav")
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -96,15 +103,8 @@ class MainActivity : AppCompatActivity() {
                             "HearTheSounds.wav"
                         }
                         playSound(fileName)
-
-                    } else {
-                        playSound("OpenYourEyes.wav")
                     }
-
                 }
-//                else {
-//                    textTimer?.setTextColor(Color.BLACK)
-//                }
             }
         }
         timer?.start()
