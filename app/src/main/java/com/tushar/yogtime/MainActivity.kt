@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private var timer: CountDownTimer? = null
 
     // Minutes into Seconds
-    private val yogTime: Long = 1 * 60
+    private val yogTime: Long = 10 * 60
 
     //
     var mediaPlayer: MediaPlayer? = null
