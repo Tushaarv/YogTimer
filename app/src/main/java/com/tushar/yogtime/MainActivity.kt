@@ -1,13 +1,16 @@
 package com.tushar.yogtime
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     //
     var mediaPlayer: MediaPlayer? = null
 
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,7 +36,16 @@ class MainActivity : AppCompatActivity() {
         )
 
         // Set label
-        setTitle(R.string.Home_Label)
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+
+        val customActionBar = layoutInflater.inflate(R.layout.toolbar, null)
+        val customActionBarLayoutParams = ActionBar.LayoutParams(
+            ActionBar.LayoutParams.MATCH_PARENT,
+            ActionBar.LayoutParams.MATCH_PARENT,
+            Gravity.CENTER
+        )
+        supportActionBar?.setCustomView(customActionBar, customActionBarLayoutParams)
+
 
         // Show Timer Countdown
         textTimer = findViewById(R.id.home_text_message)
@@ -79,14 +92,14 @@ class MainActivity : AppCompatActivity() {
                         // Play Alternate Sound
                         soundOne = !soundOne
                         val fileName = if (soundOne)
-                            "Feel.mp3"
+                            "FeelTheBody.wav"
                         else {
-                            "Hear.mp3"
+                            "HearTheSounds.wav"
                         }
                         playSound(fileName)
 
                     } else {
-                        playSound("OpenYourEyes.mp3")
+                        playSound("OpenYourEyes.wav")
                     }
 
                 } else {
