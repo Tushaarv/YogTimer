@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">YogTime</string>
+
+    <string name="Home_Label">Yog Time</string>
+    <string name="home_button_start">Start</string>
+    <string name="home_button_reset">Reset</string>
+
 </resources>
