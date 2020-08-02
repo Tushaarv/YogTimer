@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         // Show Timer Countdown
         textTimer = findViewById(R.id.home_text_message)
+        textTimer?.text = displayTime(yogTime)
     }
 
     /**
@@ -49,7 +50,15 @@ class MainActivity : AppCompatActivity() {
         var timLeft = yogTime
         var soundOne = true
 
-        timer?.cancel()
+        if (timer != null) {
+            timer?.cancel()
+            timer = null
+            (view as Button).text = getString(R.string.home_button_start)
+            textTimer?.text = displayTime(yogTime)
+            return
+        }
+
+
         timer = object : CountDownTimer(timerDuration, timerInterval) {
             override fun onFinish() {
                 (view as Button).text = getString(R.string.home_button_start)
@@ -105,6 +114,9 @@ class MainActivity : AppCompatActivity() {
      * Formats the time to display
      */
     fun displayTime(timeLeft: Long): String {
-        return (timeLeft / 60).toString() + ":" + (timeLeft - ((timeLeft / 60) * 60)).toString()
+        return (timeLeft / 60).toString() + ":" + String.format(
+            "%02d",
+            (timeLeft - ((timeLeft / 60) * 60))
+        )
     }
 }
